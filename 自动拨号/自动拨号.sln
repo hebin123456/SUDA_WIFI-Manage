@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+# SharpDevelop 5.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "自动拨号", "自动拨号\自动拨号.csproj", "{4F6E34B5-A358-47DD-B3B3-6CEBC8CFE68A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4F6E34B5-A358-47DD-B3B3-6CEBC8CFE68A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F6E34B5-A358-47DD-B3B3-6CEBC8CFE68A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F6E34B5-A358-47DD-B3B3-6CEBC8CFE68A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F6E34B5-A358-47DD-B3B3-6CEBC8CFE68A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
