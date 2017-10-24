@@ -15,6 +15,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace 自动拨号
 {
@@ -44,6 +45,13 @@ namespace 自动拨号
 					
 				}
 			}
+			
+			string path = Application.ExecutablePath;
+			RegistryKey rk = Registry.LocalMachine;
+			RegistryKey rk2 = rk.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run");
+			string a = (string)rk2.GetValue("SUDA_AUTO");
+			
+			if(a != null) checkBox1.CheckState = CheckState.Checked;
 			
 			if(Online()){
 				label2.Text = "连接";
@@ -80,6 +88,11 @@ namespace 自动拨号
 			textBox2.Enabled = false;
 			button1.Enabled = false;
 			button2.Enabled = true;
+			
+			string path = @"config.ini";
+			// 用覆盖的方式写入  
+			string contents = textBox1.Text + "\r\n" + Encrypt(textBox2.Text);
+			File.WriteAllText(path, contents);  
 			
 			th = new Thread(new ParameterizedThreadStart(MethodThread));
             th.Start();
@@ -259,11 +272,44 @@ namespace 自动拨号
         }
         #endregion
         
-		private void MainFormFormClosed(object sender, FormClosedEventArgs e)
+		private void MainFormFormClosing(object sender, FormClosingEventArgs e)
 		{
-			if(th != null){
+			e.Cancel = true;//取消窗体的关闭事件
+			this.WindowState = FormWindowState.Minimized;//使当前窗体最小化
+			notifyIcon1.Visible = true;//使最下化的图标可见
+		}
+		
+		private void 退出ToolStripMenuItemClick(object sender, EventArgs e)
+		{
+			try{
 				th.Abort();
 			}
+			catch{}
+			Application.Exit();
+		}
+		
+		private void CheckBox1Click(object sender, EventArgs e)
+		{
+			if (checkBox1.Checked) //设置开机自启动
+            {
+                MessageBox.Show ("已设置开机自启动","提示");  
+                string path = Application.ExecutablePath;
+                RegistryKey rk = Registry.LocalMachine;
+                RegistryKey rk2 = rk.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run");
+                rk2.SetValue("SUDA_AUTO", path);
+                rk2.Close();
+                rk.Close();
+            }
+            else //取消开机自启动  
+            {
+                MessageBox.Show ("已取消开机自启动","提示");  
+                string path = Application.ExecutablePath;
+                RegistryKey rk = Registry.LocalMachine;
+                RegistryKey rk2 = rk.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run");
+                rk2.DeleteValue("SUDA_AUTO", false);
+                rk2.Close();
+                rk.Close();
+            }
 		}
 	}
 }

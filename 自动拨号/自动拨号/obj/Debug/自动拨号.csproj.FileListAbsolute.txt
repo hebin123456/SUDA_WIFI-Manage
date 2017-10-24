@@ -6,3 +6,11 @@ C:\Users\以夕阳落款\Desktop\自动拨号\自动拨号\obj\Debug\自动拨�
 C:\Users\以夕阳落款\Desktop\自动拨号\自动拨号\obj\Debug\自动拨号.csproj.GenerateResource.Cache
 C:\Users\以夕阳落款\Desktop\自动拨号\自动拨号\obj\Debug\自动拨号.exe
 C:\Users\以夕阳落款\Desktop\自动拨号\自动拨号\obj\Debug\自动拨号.pdb
+C:\Users\以夕阳落款\Documents\GitHub\SUDA_WIFI-Manage\自动拨号\自动拨号\bin\Debug\自动拨号.exe.config
+C:\Users\以夕阳落款\Documents\GitHub\SUDA_WIFI-Manage\自动拨号\自动拨号\bin\Debug\自动拨号.exe
+C:\Users\以夕阳落款\Documents\GitHub\SUDA_WIFI-Manage\自动拨号\自动拨号\bin\Debug\自动拨号.pdb
+C:\Users\以夕阳落款\Documents\GitHub\SUDA_WIFI-Manage\自动拨号\自动拨号\obj\Debug\自动拨号.csprojResolveAssemblyReference.cache
+C:\Users\以夕阳落款\Documents\GitHub\SUDA_WIFI-Manage\自动拨号\自动拨号\obj\Debug\自动拨号.MainForm.resources
+C:\Users\以夕阳落款\Documents\GitHub\SUDA_WIFI-Manage\自动拨号\自动拨号\obj\Debug\自动拨号.csproj.GenerateResource.Cache
+C:\Users\以夕阳落款\Documents\GitHub\SUDA_WIFI-Manage\自动拨号\自动拨号\obj\Debug\自动拨号.exe
+C:\Users\以夕阳落款\Documents\GitHub\SUDA_WIFI-Manage\自动拨号\自动拨号\obj\Debug\自动拨号.pdb
