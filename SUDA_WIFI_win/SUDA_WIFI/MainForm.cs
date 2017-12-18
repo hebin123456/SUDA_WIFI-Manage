@@ -29,23 +29,15 @@ namespace SUDA_WIFI
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			
-			// textBox1.Text = Settings.Default.username.Trim();
-			// textBox2.Text = Settings.Default.password.Trim();
-			if(File.Exists(@"config.ini")){
-				try{
-					string[] str = File.ReadAllLines(@"config.ini");
-					textBox1.Text = str[0];
-					textBox2.Text = Decrypt(str[1]);
-				}
-				catch{
-					
-				}
-			}
-			
-			string result = getRequest("http://a.suda.edu.cn/index.php/index/init?");
+
+            // textBox1.Text = Settings.Default.username.Trim();
+            // textBox2.Text = Settings.Default.password.Trim();
+            tb_username.Text = Properties.Settings.Default.username;
+            tb_password.Text = Properties.Settings.Default.username;
+
+            string result = getRequest("http://a.suda.edu.cn/index.php/index/init?");
 			if(result.Contains("\"status\":1")){
-				button_Login.Text = "下线";
+				btn_Login.Text = "下线";
 				flag = 1;
 			}
 			
@@ -59,18 +51,15 @@ namespace SUDA_WIFI
 		private void Button_LoginClick(object sender, EventArgs e)
 		{
 			if(flag == 0){
-				string result = getRequest("http://a.suda.edu.cn/index.php/index/login", textBox1.Text, textBox2.Text);
+				string result = getRequest("http://a.suda.edu.cn/index.php/index/login", tb_username.Text, tb_password.Text);
 				if(result.Contains("\"status\":1")){
 					MessageBox.Show("登录成功！");
-					button_Login.Text = "下线";
+					btn_Login.Text = "下线";
 					flag = 1;
-					// Settings.Default.username = textBox1.Text;
-					// Settings.Default.password = textBox2.Text;
-					// Settings.Default.Save();
-					string path = @"config.ini";
-					// 用覆盖的方式写入  
-					string contents = textBox1.Text + "\r\n" + Encrypt(textBox2.Text);
-					File.WriteAllText(path, contents);  
+
+                    Properties.Settings.Default.username = tb_username.Text;
+                    Properties.Settings.Default.password = tb_password.Text;
+                    Properties.Settings.Default.Save();
 				}
 				else{
 					int a = result.IndexOf("\"info\":\"");
@@ -83,7 +72,7 @@ namespace SUDA_WIFI
 				string result = getRequest("http://a.suda.edu.cn/index.php/index/logout");
 				if(result.Contains("\"status\":1")){
 					MessageBox.Show("下线成功！");
-					button_Login.Text = "登录";
+					btn_Login.Text = "登录";
 					flag = 0;
 				}
 				else{
@@ -164,7 +153,7 @@ namespace SUDA_WIFI
 		}
 		
 		static string encryptKey = "Oyea";    //定义密钥
-		#region 加密字符串  
+        #region 加密字符串(已废弃)  
         /// <summary> /// 加密字符串   
         /// </summary>  
         /// <param name="str">要加密的字符串</param>  
@@ -187,10 +176,10 @@ namespace SUDA_WIFI
             CStream.FlushFinalBlock();              //释放加密流      
   
             return Convert.ToBase64String(MStream.ToArray());//返回加密后的字符串  
-        }  
-        #endregion 
-  
-        #region 解密字符串   
+        }
+        #endregion
+
+        #region 解密字符串(已废弃)   
         /// <summary>  
         /// 解密字符串   
         /// </summary>  

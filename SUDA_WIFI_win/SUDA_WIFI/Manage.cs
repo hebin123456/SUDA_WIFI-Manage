@@ -8,8 +8,10 @@
  */
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Net;
+using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -28,21 +30,14 @@ namespace SUDA_WIFI
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
-			
-			// textBox1.Text = Settings.Default.username.Trim();
-			// textBox2.Text = Settings.Default.password.Trim();
-			if(File.Exists(@"config.ini")){
-				try{
-					string[] str = File.ReadAllLines(@"config.ini");
-					textBox1.Text = str[0];
-					textBox2.Text = Decrypt(str[1]);
-				}
-				catch{
-					
-				}
-			}
-			
-			GetValidateImage();
+
+            // textBox1.Text = Settings.Default.username.Trim();
+            // textBox2.Text = Settings.Default.password.Trim();
+            tb_username.Text = Properties.Settings.Default.username;
+            tb_password.Text = Properties.Settings.Default.username;
+
+            LoadLib();
+            GetValidateImage();
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
@@ -83,10 +78,51 @@ namespace SUDA_WIFI
             cookies = request.CookieContainer; //保存cookies
             strCookies = request.CookieContainer.GetCookieHeader(request.RequestUri); //把cookies转换成字符串
 
-            Bitmap bi = new Bitmap((Image)new Bitmap(ms));
-            pictureBox1.Image = bi;
+            pictureBox1.Image = (Image)new Bitmap(ms);
+
+            // 识别验证码
+            byte[] Buffer = ImageToBytes(pictureBox1.Image);
+            StringBuilder Result = new StringBuilder('\0', 256);
+            if (GetImageFromBuffer(Buffer, Buffer.Length, Result))
+                tb_validate.Text = Result.ToString();
+            else
+                tb_validate.Text = "识别失败";
         }
-		
+
+        // 识别读取验证码byte序列
+        public byte[] ImageToBytes(Image image)
+        {
+            ImageFormat format = image.RawFormat;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                if (format.Equals(ImageFormat.Jpeg))
+                {
+                    image.Save(ms, ImageFormat.Jpeg);
+                }
+                else if (format.Equals(ImageFormat.Png))
+                {
+                    image.Save(ms, ImageFormat.Png);
+                }
+                else if (format.Equals(ImageFormat.Bmp))
+                {
+                    image.Save(ms, ImageFormat.Bmp);
+                }
+                else if (format.Equals(ImageFormat.Gif))
+                {
+                    image.Save(ms, ImageFormat.Gif);
+                }
+                else if (format.Equals(ImageFormat.Icon))
+                {
+                    image.Save(ms, ImageFormat.Icon);
+                }
+                byte[] buffer = new byte[ms.Length];
+                //Image.Save()会改变MemoryStream的Position，需要重新Seek到Begin
+                ms.Seek(0, SeekOrigin.Begin);
+                ms.Read(buffer, 0, buffer.Length);
+                return buffer;
+            }
+        }
+
         private void PictureBox1Click(object sender, EventArgs e)
 		{
         	GetValidateImage();
@@ -95,7 +131,7 @@ namespace SUDA_WIFI
         private void Button_LoginClick(object sender, EventArgs e)
 		{
         	listView1.Items.Clear();
-        	string result = Login(textBox1.Text, textBox2.Text, textBox3.Text);
+        	string result = Login(tb_username.Text, tb_password.Text, tb_validate.Text);
         	if(result.Contains("\"status\":1")){
 				MessageBox.Show("登录成功！");
 				string html = GetInfo();
@@ -275,9 +311,27 @@ namespace SUDA_WIFI
 				}
 			}
 		}
-        
+
+        [DllImport("WmCode.dll")]
+        public static extern bool LoadWmFromFile(string FilePath, string Password);
+
+        [DllImport("WmCode.dll")]
+        public static extern bool GetImageFromBuffer(byte[] FileBuffer, int ImgBufLen, StringBuilder Vcode);
+
+        [DllImport("WmCode.dll")]
+        public static extern bool SetWmOption(int OptionIndex, int OptionValue);
+
+        // 加载验证码识别库
+        private void LoadLib()
+        {
+            if (LoadWmFromFile("SUDA_WIFI.dat", "123456"))
+            {
+                SetWmOption(6, 90);
+            }
+        }
+
         static string encryptKey = "Oyea";    //定义密钥
-		#region 加密字符串  
+        #region 加密字符串(已废弃)
         /// <summary> /// 加密字符串   
         /// </summary>  
         /// <param name="str">要加密的字符串</param>  
@@ -300,10 +354,10 @@ namespace SUDA_WIFI
             CStream.FlushFinalBlock();              //释放加密流      
   
             return Convert.ToBase64String(MStream.ToArray());//返回加密后的字符串  
-        }  
-        #endregion 
-  
-        #region 解密字符串   
+        }
+        #endregion
+
+        #region 解密字符串(已废弃)
         /// <summary>  
         /// 解密字符串   
         /// </summary>  
