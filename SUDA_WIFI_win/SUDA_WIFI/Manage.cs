@@ -34,13 +34,10 @@ namespace SUDA_WIFI
             // textBox1.Text = Settings.Default.username.Trim();
             // textBox2.Text = Settings.Default.password.Trim();
             tb_username.Text = Properties.Settings.Default.username;
-            tb_password.Text = Properties.Settings.Default.username;
+            tb_password.Text = Properties.Settings.Default.password;
 
             LoadLib();
             GetValidateImage();
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
 		}
 		
 		CookieContainer cookies = null;

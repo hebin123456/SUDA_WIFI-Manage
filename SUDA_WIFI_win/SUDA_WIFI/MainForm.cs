@@ -6,14 +6,18 @@
  * 
  * 要改变这种模板请点击 工具|选项|代码编写|编辑标准头文件
  */
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Security.Cryptography;
+using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace SUDA_WIFI
@@ -33,7 +37,8 @@ namespace SUDA_WIFI
             // textBox1.Text = Settings.Default.username.Trim();
             // textBox2.Text = Settings.Default.password.Trim();
             tb_username.Text = Properties.Settings.Default.username;
-            tb_password.Text = Properties.Settings.Default.username;
+            tb_password.Text = Properties.Settings.Default.password;
+            checkbox_autostart.Checked = Properties.Settings.Default.autostart;
 
             string result = getRequest("http://a.suda.edu.cn/index.php/index/init?");
 			if(result.Contains("\"status\":1")){
@@ -203,7 +208,186 @@ namespace SUDA_WIFI
             CStream.FlushFinalBlock();               //释放解密流      
   
             return Encoding.Unicode.GetString(MStream.ToArray());       //返回解密后的字符串  
-        }  
-        #endregion 
-	}
+        }
+        #endregion
+        
+
+        private void MainForm_SizeChanged(object sender, EventArgs e)
+        {
+            if(this.WindowState == FormWindowState.Minimized)
+            {
+                ifMinimized();
+            }
+        }
+
+        private void 退出ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        private void notifyIcon1_DoubleClick(object sender, EventArgs e)
+        {
+            ifMinimized();
+            this.WindowState = FormWindowState.Normal;
+        }
+
+        private void ifMinimized()
+        {
+            this.ShowInTaskbar = !this.ShowInTaskbar;
+            notifyIcon1.Visible = !notifyIcon1.Visible;
+        }
+        
+        Thread th;
+
+        private void btn_Start_Click(object sender, EventArgs e)
+        {
+            changeAutoState();
+            
+            th = new Thread(new ParameterizedThreadStart(MethodThread));
+            th.Start();
+        }
+
+        private void btn_Stop_Click(object sender, EventArgs e)
+        {
+            changeAutoState();
+
+            th.Abort();
+        }
+
+        private delegate void SetOtherPage(string username, string password);//创建一个代理
+
+        // 顺序播放
+        public void MethodThread(Object list)
+        {
+            while (true)
+            {
+                Method("", "");
+                Thread.Sleep(10000);
+            }
+        }
+
+        //子线程操作主线程
+        private void Method(string username, string password)
+        {
+            if (!InvokeRequired)
+            {
+                if (Online())
+                {
+                    lb_State.Text = "连接";
+                }
+                else
+                {
+                    lb_State.Text = "断开";
+                    string result = getRequest("http://a.suda.edu.cn/index.php/index/login", tb_username.Text, tb_password.Text);
+                    if (result.Contains("\"status\":1"))
+                    {
+                        Properties.Settings.Default.username = tb_username.Text;
+                        Properties.Settings.Default.password = tb_password.Text;
+                        Properties.Settings.Default.Save();
+                    }
+                }
+            }
+            else
+            {
+                SetOtherPage a1 = new SetOtherPage(Method);
+                Invoke(a1, new object[] { username, password });//执行唤醒操作
+            }
+        }
+
+        private bool Online()
+        {
+            try
+            {
+                string result = getRequest("http://a.suda.edu.cn/index.php/index/init?");
+                if (result.Contains("\"status\":1"))
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        
+        private void changeAutoState()
+        {
+            tb_username.Enabled = !tb_username.Enabled;
+            tb_password.Enabled = !tb_password.Enabled;
+            btn_Login.Enabled = !btn_Login.Enabled;
+            btn_Manage.Enabled = !btn_Manage.Enabled;
+            btn_Start.Enabled = !btn_Start.Enabled;
+            btn_Stop.Enabled = !btn_Stop.Enabled;
+        }
+
+        private void checkbox_autostart_Click(object sender, EventArgs e)
+        {
+            WindowsPrincipal pricipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+            bool isLimited = pricipal.IsInRole(WindowsBuiltInRole.Administrator);
+
+            if (!isLimited)
+            {
+                // 取消要记得取消状态改变
+                checkbox_autostart.Checked = !checkbox_autostart.Checked;
+
+                MessageBoxButtons messButton = MessageBoxButtons.OKCancel;
+                DialogResult dialogResult = MessageBox.Show("设置开机自启需要管理员权限, 确定吗?", "退出系统", messButton);
+                if (dialogResult == DialogResult.OK)
+                {
+                    RunElevated(Application.ExecutablePath);
+                    Environment.Exit(0);
+                }
+            }
+            else
+            {
+                if (checkbox_autostart.Checked) //设置开机自启动
+                {
+                    MessageBox.Show("已设置开机自启动", "提示");
+                    string path = Application.ExecutablePath;
+                    RegistryKey rk = Registry.LocalMachine;
+                    RegistryKey rk2 = rk.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run");
+                    rk2.SetValue("SUDA_AUTO", path);
+                    rk2.Close();
+                    rk.Close();
+                    Properties.Settings.Default.autostart = true;
+                    Properties.Settings.Default.Save();
+                }
+                else //取消开机自启动  
+                {
+                    MessageBox.Show("已取消开机自启动", "提示");
+                    string path = Application.ExecutablePath;
+                    RegistryKey rk = Registry.LocalMachine;
+                    RegistryKey rk2 = rk.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run");
+                    rk2.DeleteValue("SUDA_AUTO", false);
+                    rk2.Close();
+                    rk.Close();
+                    Properties.Settings.Default.autostart = false;
+                    Properties.Settings.Default.Save();
+                }
+            }
+        }
+
+        // 启动UAC
+        private void RunElevated(string fileName)
+        {
+            ProcessStartInfo processInfo = new ProcessStartInfo();
+            processInfo.Verb = "runas";
+            processInfo.FileName = fileName;
+            try
+            {
+                Process.Start(processInfo);
+            }
+            catch { }
+        }
+
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+                th.Abort();
+            }
+            catch { }
+        }
+    }
 }

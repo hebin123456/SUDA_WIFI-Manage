@@ -43,6 +43,7 @@ namespace SUDA_WIFI
 		/// </summary>
 		private void InitializeComponent()
 		{
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -50,6 +51,18 @@ namespace SUDA_WIFI
             this.tb_password = new System.Windows.Forms.TextBox();
             this.btn_Login = new System.Windows.Forms.Button();
             this.btn_Manage = new System.Windows.Forms.Button();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btn_Stop = new System.Windows.Forms.Button();
+            this.btn_Start = new System.Windows.Forms.Button();
+            this.checkbox_autostart = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lb_State = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.contextMenuStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -85,7 +98,7 @@ namespace SUDA_WIFI
             // 
             // btn_Login
             // 
-            this.btn_Login.Location = new System.Drawing.Point(12, 64);
+            this.btn_Login.Location = new System.Drawing.Point(14, 64);
             this.btn_Login.Name = "btn_Login";
             this.btn_Login.Size = new System.Drawing.Size(75, 23);
             this.btn_Login.TabIndex = 4;
@@ -103,11 +116,102 @@ namespace SUDA_WIFI
             this.btn_Manage.UseVisualStyleBackColor = true;
             this.btn_Manage.Click += new System.EventHandler(this.Button_ManageClick);
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "自动拨号";
+            this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.退出ToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(101, 26);
+            // 
+            // 退出ToolStripMenuItem
+            // 
+            this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
+            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.退出ToolStripMenuItem.Text = "退出";
+            this.退出ToolStripMenuItem.Click += new System.EventHandler(this.退出ToolStripMenuItem_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.btn_Stop);
+            this.groupBox1.Controls.Add(this.btn_Start);
+            this.groupBox1.Controls.Add(this.checkbox_autostart);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.lb_State);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Location = new System.Drawing.Point(14, 106);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(206, 103);
+            this.groupBox1.TabIndex = 7;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "高级功能——自动拨号";
+            // 
+            // btn_Stop
+            // 
+            this.btn_Stop.Enabled = false;
+            this.btn_Stop.Location = new System.Drawing.Point(103, 70);
+            this.btn_Stop.Name = "btn_Stop";
+            this.btn_Stop.Size = new System.Drawing.Size(75, 23);
+            this.btn_Stop.TabIndex = 12;
+            this.btn_Stop.Text = "停止";
+            this.btn_Stop.UseVisualStyleBackColor = true;
+            this.btn_Stop.Click += new System.EventHandler(this.btn_Stop_Click);
+            // 
+            // btn_Start
+            // 
+            this.btn_Start.Location = new System.Drawing.Point(8, 70);
+            this.btn_Start.Name = "btn_Start";
+            this.btn_Start.Size = new System.Drawing.Size(75, 23);
+            this.btn_Start.TabIndex = 11;
+            this.btn_Start.Text = "开始";
+            this.btn_Start.UseVisualStyleBackColor = true;
+            this.btn_Start.Click += new System.EventHandler(this.btn_Start_Click);
+            // 
+            // checkbox_autostart
+            // 
+            this.checkbox_autostart.Location = new System.Drawing.Point(103, 39);
+            this.checkbox_autostart.Name = "checkbox_autostart";
+            this.checkbox_autostart.Size = new System.Drawing.Size(38, 24);
+            this.checkbox_autostart.TabIndex = 10;
+            this.checkbox_autostart.UseVisualStyleBackColor = true;
+            this.checkbox_autostart.Click += new System.EventHandler(this.checkbox_autostart_Click);
+            // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(6, 44);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(89, 23);
+            this.label5.TabIndex = 9;
+            this.label5.Text = "开机自启：";
+            // 
+            // lb_State
+            // 
+            this.lb_State.Location = new System.Drawing.Point(101, 21);
+            this.lb_State.Name = "lb_State";
+            this.lb_State.Size = new System.Drawing.Size(38, 23);
+            this.lb_State.TabIndex = 2;
+            this.lb_State.Text = "断开";
+            // 
+            // label3
+            // 
+            this.label3.Location = new System.Drawing.Point(6, 21);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(89, 23);
+            this.label3.TabIndex = 1;
+            this.label3.Text = "当前连接状态：";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(232, 99);
+            this.ClientSize = new System.Drawing.Size(232, 219);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btn_Manage);
             this.Controls.Add(this.btn_Login);
             this.Controls.Add(this.tb_password);
@@ -120,9 +224,24 @@ namespace SUDA_WIFI
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SUDA_WIFI";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+            this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
+            this.contextMenuStrip1.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
 		}
-	}
+
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem 退出ToolStripMenuItem;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button btn_Stop;
+        private System.Windows.Forms.Button btn_Start;
+        private System.Windows.Forms.CheckBox checkbox_autostart;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lb_State;
+        private System.Windows.Forms.Label label3;
+    }
 }
