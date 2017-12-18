@@ -1,5 +1,5 @@
-## SUDA_WIFI-Manage
-#this is a project with SUDA_WIFI management, using C#, Java and JavaScript, compated with Windows Desktop and Android, but now there is only Windows Client.
+## 苏大WIFI管理程序
+#这是一个苏大WIFI的管理程序，使用C#、Java和JavaScript开发，兼容windows和android、IOS
 
 #2017-12-18：
 
