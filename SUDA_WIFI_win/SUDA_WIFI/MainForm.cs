@@ -45,10 +45,11 @@ namespace SUDA_WIFI
 				btn_Login.Text = "下线";
 				flag = 1;
 			}
-			
-			//
-			// TODO: Add constructor code after the InitializeComponent() call.
-			//
+
+            if (Properties.Settings.Default.autostart)
+            {
+                btn_Start_Click(null, null);
+            }
 		}
 		
 		private int flag = 0;
