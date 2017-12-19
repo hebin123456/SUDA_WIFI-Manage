@@ -263,7 +263,7 @@ namespace SUDA_WIFI
             while (true)
             {
                 Method("", "");
-                Thread.Sleep(10000);
+                Thread.Sleep(1000);
             }
         }
 
@@ -272,9 +272,10 @@ namespace SUDA_WIFI
         {
             if (!InvokeRequired)
             {
-                if (Online())
+                string str = Online();
+                if (str != "0")
                 {
-                    lb_State.Text = "连接";
+                    lb_State.Text = "已连接 " + str;
                 }
                 else
                 {
@@ -295,20 +296,28 @@ namespace SUDA_WIFI
             }
         }
 
-        private bool Online()
+        private string Online()
         {
             try
             {
                 string result = getRequest("http://a.suda.edu.cn/index.php/index/init?");
                 if (result.Contains("\"status\":1"))
                 {
-                    return true;
+                    string pattern = "\"logout_timer\":\\d+";
+                    Match match = (new Regex(pattern)).Match(result);
+                    string s = match.ToString();
+                    s = s.Substring(15, s.Length - 15);
+                    int t = Int32.Parse(s);
+                    int a = t / 3600;
+                    int b = t / 60 - a * 60;
+                    int c = t % 60;
+                    return (a < 10? "0":"") + a + ":" + (b < 10 ? "0" : "") + b + ":" + (c < 10 ? "0" : "") + c;
                 }
-                return false;
+                return "0";
             }
             catch
             {
-                return false;
+                return "0";
             }
         }
         

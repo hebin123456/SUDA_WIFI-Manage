@@ -194,7 +194,7 @@ namespace SUDA_WIFI
             // 
             this.lb_State.Location = new System.Drawing.Point(101, 21);
             this.lb_State.Name = "lb_State";
-            this.lb_State.Size = new System.Drawing.Size(38, 23);
+            this.lb_State.Size = new System.Drawing.Size(99, 23);
             this.lb_State.TabIndex = 2;
             this.lb_State.Text = "断开";
             // 
