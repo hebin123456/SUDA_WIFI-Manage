@@ -399,5 +399,10 @@ namespace SUDA_WIFI
             }
             catch { }
         }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Minimized;
+        }
     }
 }
