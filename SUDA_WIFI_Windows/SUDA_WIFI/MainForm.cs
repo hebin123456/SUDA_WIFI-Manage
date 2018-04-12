@@ -230,6 +230,7 @@ namespace SUDA_WIFI
         {
             ifMinimized();
             this.WindowState = FormWindowState.Normal;
+            this.BringToFront();
         }
 
         private void ifMinimized()
