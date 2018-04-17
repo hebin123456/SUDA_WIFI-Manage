@@ -1,0 +1,322 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, initial-scale=1.0, width=device-width" />
+    <meta name="format-detection" content="telephone=no, email=no, date=no, address=no">
+    <title>登陆页面</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+    <script type="text/javascript" src="../script/api.js"></script>
+    <script type="text/javascript" src="../script/base64.js"></script>
+    <script type="text/javascript" src="../script/md5.js"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        #wrap {
+            height: 100%;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-flex-flow: column;
+        }
+        /*main内容样式*/
+
+        #main {
+            -webkit-box-flex: 1;
+            width: 100%;
+            -webkit-flex: 1;
+            background-color: #eceff0;
+            padding-top: 20px;
+        }
+
+        #backimg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            z-index: 0;
+            left: 0px;
+            top: 0px;
+            overflow: hidden
+        }
+        /*左右10个像素*/
+
+        #login {
+            width: auto;
+            padding: 8%;
+            color: #FFFFFF;
+            position: absolute;
+            z-index: 1;
+        }
+
+        #login .int {
+            height: 42px;
+            width: 100%;
+            line-height: 40px;
+            margin: 0px auto;
+            font-size: 18px;
+            float: left;
+            border-width: 0 0 1px 0;
+            border-style: solid;
+            border-color: #FFFFFF;
+        }
+
+        #login .btn {
+            height: 40px;
+            width: 100%;
+            line-height: 40px;
+            margin-top: 20px;
+            font-size: 18px;
+            float: left;
+        }
+
+        #login .log {
+            width: 100%;
+            height: 40px;
+            color: #FFFFFF;
+            text-align: center;
+            font-weight: 400;
+            background: #FF6E86;
+            outline: none;
+            border-radius: 40px;
+        }
+
+        #login .log1 {
+            width: 100%;
+            height: 40px;
+            color: #FFFFFF;
+            text-align: center;
+            font-weight: 400;
+            background: #3656A9;
+            outline: none;
+            border-radius: 40px;
+            margin-top: 25px;
+        }
+
+        #login .btnsmall {
+            height: 40px;
+            width: 100%;
+            line-height: 40px;
+            margin-top: 45px;
+            font-size: 18px;
+            float: left;
+        }
+
+        #login .log2 {
+            width: 46%;
+            height: 40px;
+            color: #FFFFFF;
+            border-radius: 40px;
+            border: 1px solid #FFFFFF;
+            float: left
+        }
+
+        #login .log3 {
+            width: 46%;
+            height: 40px;
+            color: #FFFFFF;
+            border-radius: 40px;
+            border: 1px solid #FFFFFF;
+            float: right
+        }
+
+        #login .span {
+            color: #FFFFFF;
+            width: auto;
+            text-align: center;
+            height: 50px;
+        }
+
+        #login .left {
+            margin-top: 10px;
+            height: auto;
+            float: left;
+        }
+
+        #login .right {
+            margin-top: 6px;
+            width: 90%;
+            height: auto;
+            float: right;
+            font-size: 18px
+        }
+
+        #login .int .txt {
+            width: 60%;
+            height: 30px;
+            line-height: 30px;
+            border: none;
+            outline: none;
+            color: #FFFFFF;
+        }
+
+        .logo {
+            text-align: center;
+            margin: 0px 0px 35px 0px;
+        }
+
+        p {
+            font-size: 22px;
+            color: #FFFFFF;
+        }
+
+        input::-webkit-input-placeholder {
+            color: #FFFFFF;
+        }
+
+        #footer {
+            width: auto;
+            height: 50px;
+            padding: 0 8px;
+            display: -webkit-box;
+            -webkit-box-orient: horizontal;
+            background-color: #078f5f;
+        }
+
+        .tab-item {
+            height: 50px;
+            -webkit-box-flex: 1;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-box-pack: center;
+            -webkit-box-align: center;
+        }
+
+        center {
+            color: #FFF;
+            margin-top: 3px;
+            font-size: 0.7em;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="main">
+            <div id="backimg"><img src="../image/backimage.png" style="width: 100%;" /></div>
+            <div id="login">
+                <!-- 用户名栏 -->
+                <div class="logo">
+                    <img src="../image/icon.png" style="width: 55px;height: :60px" />
+                    <p>
+                        苏州大学WLAN登录管理
+                    </p>
+                </div>
+                <div class="int">
+                    <div class="left">
+                        <span><img src="../image/phone.png" style="width: 15px;height: 20px;margin-left: 5px" /></span>
+                    </div>
+                    <div class="right">
+                        <input value="20165227018" type="text" name="username" id="username" class="txt" placeholder="在此输入账号" />
+                    </div>
+                </div>
+                <!-- 密码栏 -->
+                <div class="int">
+                    <div class="left">
+                        <span><img src="../image/password.png" style="width: 15px;height: 20px;margin-left: 5px" /></span>
+                    </div>
+                    <div class="right">
+                        <input value="aaaa1111" type="password" name="password" id="password" class="txt" placeholder="在此输入密码" />
+                    </div>
+                </div>
+                <!-- 验证码栏 -->
+                <div class="int">
+                    <div class="left">
+                        <span><img src="../image/password.png" style="width: 15px;height: 20px;margin-left: 5px" /></span>
+                    </div>
+                    <div class="right" id="verifyright">
+                        <input value="" type="text" name="verify" id="verify" class="txt" placeholder="在此输入验证码" />
+                        <img name="verifyimg" id="verifyimg" src="http://10.9.0.14/index.php/service/public/verify/" style="width: 50px;height: 22px;margin-left: 3px" onclick="change();return false;" />
+                    </div>
+                </div>
+                <!-- 登录按钮-->
+                <div class="btnsmall" style="text-align: center">
+                    <a class="log2" tapmode="tap-active" onclick="forgetPass();">忘记密码</a>
+                    <a class="log3" tapmode="tap-active" onclick="login();">登陆</a>
+                </div>
+                <!--
+					<div class="btn">
+						<a class="log" id="btn_login" tapmode="tap-active" onclick="login()">登录</a>
+						<a class="log1" tapmode="tap-active" onclick="wxLogin();">微信登录</a>
+					</div> -->
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+<script type="text/javascript">
+    apiready = function() {
+      var input_user = document.getElementById('username');
+      var input_pass = document.getElementById('password');
+      input_user.value = api.pageParam.username;
+      input_pass.value = api.pageParam.password;
+    };
+
+
+    function login() {
+        var input_user = document.getElementById('username');
+        var input_pass = document.getElementById('password');
+        var input_verify = document.getElementById('verify');
+
+        var username = input_user.value;
+        var password = input_pass.value;
+        var pass_encode = base64encode(password);
+        var verify = input_verify.value;
+        var verify_encode = window.md5(verify);
+
+        if (username == "" || password == "" || verify == "") {
+            alert("请输入完整信息！");
+            return;
+        }
+
+        api.showProgress({
+            style: 'default',
+            animationType: 'fade',
+            title: '正在登录',
+            modal: true
+        });
+
+        api.ajax({
+            url: 'http://10.9.0.14/index.php/service/public/checkLogin',
+            method: 'post',
+            data: {
+                values: {
+                    username: username,
+                    password: pass_encode,
+                    verify: verify_encode
+                }
+            }
+        }, function(ret, err) {
+            //登录成功
+            if (ret.status == "1") {
+                api.openWin({
+                    bounces: false,
+                    name: 'account',
+                    url: './account.html',
+                    scrollEnabled: false,
+                    slidBackEnabled: false
+                });
+            } else {
+                api.toast({
+                    msg: ret.info
+                });
+            }
+            api.hideProgress();
+        });
+    }
+
+    function forgetPass() {
+        api.toast({
+            msg: '请到电脑上操作或联系网管中心！'
+        });
+    }
+
+    function change() {
+        var verifyimg = document.getElementById('verifyimg');
+        $api.attr(verifyimg, "src", "http://10.9.0.14/index.php/service/public/verify/" + (new Date().getTime()));
+    }
+</script>
+
+</html>

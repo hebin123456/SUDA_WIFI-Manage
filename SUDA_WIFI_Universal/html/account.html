@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+	<title>登录管理</title>
+	<link rel="stylesheet" type="text/css" href="../css/api.css" />
+	<script type="text/javascript" src="../script/jquery.js"></script>
+	<style>
+		html,
+		body {
+			height: 100%;
+			font-size: 16px;
+			background-color: #f2f2f2;
+		}
+
+		#wrap {
+			height: 100%;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			-webkit-flex-flow: column;
+		}
+
+		#header {
+			height: 40px;
+			width: 100%;
+			background: #38acfc;
+		}
+
+		#header .header-nav {
+			width: auto;
+			display: -webkit-box;
+			padding: 0px 12px;
+			color: #FFFFFF;
+			text-align: center;
+			font-size: 14px;
+			position: relative;
+		}
+
+		#header .header-nav h1 {
+			width: 60%;
+			-webkit-box-flex: 1;
+			height: 40px;
+			line-height: 40px;
+			font-size: 20px;
+			font-weight: 500;
+			text-align: center;
+			margin: center;
+		}
+
+		#main .h1 {
+			text-align: center;
+			font-size: 1.4em;
+			padding-top: 2em;
+			padding-bottom: 2em;
+		}
+
+		#main .wrapper {
+			position: relative;
+			height: 100px;
+			overflow: hidden;
+			border-bottom: 1px solid #f2f2f2
+		}
+
+		#main .container {
+			position: absolute;
+			left: 0;
+			width: 100%;
+			height: 100px;
+			line-height: 100px;
+			padding-left: 5%;
+			box-sizing: border-box;
+			background-color: #fff;
+			font-size: 1.2em;
+			font-weight: 200;
+		}
+
+		#main .delete {
+			float: right;
+			width: 80px;
+			top: 0;
+			right: 0;
+			line-height: 100px;
+			background-color: #f00;
+			color: #fff;
+			text-align: center;
+			height: 100px;
+		}
+
+		#main .delete i.iconfont {
+			font-size: 1em;
+			padding-right: 5px;
+		}
+
+		#main .p {
+			text-align: center;
+			padding-top: 4em;
+			padding-bottom: 6em;
+			color: #555;
+			font-size: 1em;
+		}
+
+		#main .add {
+			width: 100px;
+			height: 50px;
+			text-align: center;
+			line-height: 50px;
+			background: #fff;
+			margin-bottom: 50px;
+		}
+
+		@keyframes noheight {
+			0% {
+				height: 100px;
+				opacity: 1;
+			}
+			100% {
+				height: 0px;
+				opacity: 0;
+			}
+		}
+
+		#main .noheight {
+			animation: noheight .5s linear 0s forwards;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="wrap">
+		<div id="header">
+			<div class="header-nav">
+				<h1>登录管理</h1>
+			</div>
+		</div>
+		<div id="main">
+			<!--<div class="wrapper">
+				<div class="container" ontouchstart="return touchstartF(event,this);" ontouchmove="return touchmoveF(event,this);">位置：suda_wifi IP:192.168.0.1</div>
+				<div class="delete" value = "1" onclick="return toDelete(event,this);">
+					<i class="iconfont icon-shanchu"></i> 删除
+				</div>
+			</div>
+			<div class="wrapper">
+				<div class="container" ontouchstart="return touchstartF(event,this);" ontouchmove="return touchmoveF(event,this);">左右滑动2</div>
+				<div class="delete" value = "2" onclick="return toDelete(event,this);">
+					<i class="iconfont icon-shanchu"></i> 删除
+				</div>
+			</div>-->
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript">
+	apiready = function() {
+		var header = $api.byId('header');
+		$api.fixStatusBar(header);
+		var headerPos = $api.offset(header);
+		var main = $api.byId('main');
+		var mainPos = $api.offset(main);
+		// 在Android下响应返回键为退出应用
+		if ('android' == api.systemType) {
+			api.addEventListener({
+				name: 'keyback'
+			}, function(ret, err) {
+				if (ret) {
+					api.closeWin({
+					    name: 'account'
+					});
+				}
+			});
+		}
+		init();
+	};
+
+	function init() {
+		api.ajax({
+			url: 'http://10.9.0.14/index.php/service/AccountInfo/index/',
+			method: 'post',
+			dataType: 'text',
+			data: {
+				values: {
+
+				}
+			}
+		}, function(ret, err) {
+			//alert(ret);
+			/*
+			 *
+			 * 原始数据：
+			 * <th style="width:15%">上线时间</th><th style="width:15%">位置</th><th style="width:15%">IP地址</th><th style="width:15%">MAC地址</th><th style="width:15%">认证域名称</th><th style="width:15%">在线类型</th><th style="width:10%">操作</th>
+			 * 去掉了上线时间，去掉了mac地址，去掉了认证域名称，去掉了在线类型
+			 *
+			 */
+			/* 原始的样式
+			var table = document.createElement("table");
+			var tbody = document.createElement("tbody");
+			var tr = document.createElement("tr");
+			tr.innerHTML = '<th style="width:40%">位置</th><th style="width:40%">IP地址</th><th style="width:20%">操作</th>';
+			tbody.appendChild(tr);
+
+			//解析
+			//页面里面有两个表格
+			var table_html = $(ret).find("table").eq(1);
+			var trList = $(table_html).find("tr");
+			//头就不用解析了
+			for (var i = 1; i < trList.length; i++) {
+				var tdList = $(trList).eq(i).find("td");
+				var tr_html = '<td>' + tdList.eq(1).text() + '</td><td>' + tdList.eq(2).text() + '</td><td><input type="button" value="下线" onclick="logout(\'' + tdList.eq(2).text() + '\')"/></td>';
+				alert(tr_html);
+				var tr = document.createElement("tr");
+				tr.innerHTML = tr_html;
+				tbody.appendChild(tr);
+			}
+			table.appendChild(tbody);*/
+			document.getElementById("main").innerHTML = "";
+			var table_html = $(ret).find("table").eq(1);
+			var trList = $(table_html).find("tr");
+			for (var i = 1; i < trList.length; i++) {
+				var tdList = $(trList).eq(i).find("td");
+				var div_wrapper = document.createElement("div");
+				var div_container = document.createElement("div");
+				var div_delete = document.createElement("div");
+
+				div_wrapper.setAttribute("class", "wrapper");
+				div_container.setAttribute("class", "container");
+				div_delete.setAttribute("class", "delete");
+
+				div_container.setAttribute("ontouchstart", "return touchstartF(event,this);");
+				div_container.setAttribute("ontouchmove", "return touchmoveF(event,this);");
+				div_container.innerHTML = "位置："+ tdList.eq(1).text() +" IP：" + tdList.eq(2).text();
+
+				div_delete.setAttribute("value", tdList.eq(2).text());
+				div_delete.setAttribute("onclick", "return toDelete(event,this);");
+				div_delete.innerHTML = "<i class=\"iconfont icon-shanchu\"></i> 下线";
+
+				div_wrapper.appendChild(div_container);
+				div_wrapper.appendChild(div_delete);
+
+				document.getElementById("main").appendChild(div_wrapper);
+			}
+		});
+	}
+
+	function logout(ipaddress) {
+		api.ajax({
+			url: 'http://10.9.0.14/index.php/service/AccountInfo/logout',
+			method: 'post',
+			dataType: 'json',
+			data: {
+				values: {
+					'framedipaddress': ipaddress,
+					'onlinetype': '0'
+				}
+			}
+		}, function(ret, err) {
+			if (ret.status == 1) {
+				alert("下线成功！");
+			}
+		});
+	}
+
+	function touchstartF(event) {
+		x = event.changedTouches[0].pageX;
+		y = event.changedTouches[0].pageY;
+		swipeX = true;
+		swipeY = true;
+	};
+
+	function touchmoveF(event, e) {
+		X = event.changedTouches[0].pageX;
+		Y = event.changedTouches[0].pageY;
+		// 左右滑动
+		if (swipeX && Math.abs(X - x) - Math.abs(Y - y) > 0) {
+			// 阻止事件冒泡
+			event.stopPropagation();
+			if (X - x > 10) {
+				event.preventDefault();
+				e.style.WebkitTransform = "translateX(" + 0 + "px)";
+				e.style.transition = "-webkit-transform 300ms ease-in-out";
+			}
+			if (x - X > 10) {
+				event.preventDefault();
+				e.style.WebkitTransform = "translateX(" + -80 + "px)";
+				e.style.transition = "-webkit-transform 300ms ease-in-out";
+			}
+			swipeY = false;
+		}
+		// 上下滑动
+		if (swipeY && Math.abs(X - x) - Math.abs(Y - y) < 0) {
+			swipeX = false;
+		}
+	};
+
+
+	function toDelete(event, e) {
+		var deleteL = document.querySelectorAll('.delete');
+		var wrapper = document.querySelectorAll('.wrapper');
+		for (var i = 0; i < wrapper.length; i++) {
+			wrapper[i].style.transition = 'height 500ms';
+			wrapper[i].style.webkitTransition = 'height 500ms';
+			wrapper[i].style.overflow = 'hidden';
+		}
+		var deleteLB = e;
+
+		var down = deleteLB.parentNode;
+		if (down.clientHeight == '100') {
+			// deleteLB.parentNode.style.height = '0';
+			deleteLB.parentNode.classList.add('noheight');
+			setTimeout(function() {
+				down.remove();
+			}, 700);
+		}
+		logout(e.getAttribute('value'));
+	}
+</script>
+
+</html>
