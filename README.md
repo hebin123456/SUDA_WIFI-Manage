@@ -1,6 +1,10 @@
 ## 苏大WIFI登录管理程序
 #这是一个苏大WIFI的管理程序，使用C#、Java和JavaScript开发，兼容Windows和Android、IOS
 
+#2018-04-20：
+
+1.开源原生Android代码
+
 #2018-04-17：
 
 1.APICLOUD STUDIO编译的版本目录更改为universal
