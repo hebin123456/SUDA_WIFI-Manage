@@ -12,7 +12,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Management;
 using System.Net;
+using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
@@ -33,6 +35,9 @@ namespace SUDA_WIFI
 			// The InitializeComponent() call is required for Windows Forms designer support.
 			//
 			InitializeComponent();
+            this.ShowInTaskbar = true;
+            notifyIcon1.Visible = false;
+
 
             // textBox1.Text = Settings.Default.username.Trim();
             // textBox2.Text = Settings.Default.password.Trim();
@@ -263,7 +268,7 @@ namespace SUDA_WIFI
         {
             while (true)
             {
-                Method("", "");
+                Method(tb_username.Text, tb_password.Text);
                 Thread.Sleep(1000);
             }
         }
@@ -281,13 +286,14 @@ namespace SUDA_WIFI
                 else
                 {
                     lb_State.Text = "断开";
-                    string result = getRequest("http://a.suda.edu.cn/index.php/index/login", tb_username.Text, tb_password.Text);
+                    /*string result = getRequest("http://a.suda.edu.cn/index.php/index/login", tb_username.Text, tb_password.Text);
                     if (result.Contains("\"status\":1"))
                     {
                         Properties.Settings.Default.username = tb_username.Text;
                         Properties.Settings.Default.password = tb_password.Text;
                         Properties.Settings.Default.Save();
-                    }
+                    }*/
+                    SocketPOST("http://a.suda.edu.cn/index.php/index/login", username, password);
                 }
             }
             else
@@ -404,6 +410,83 @@ namespace SUDA_WIFI
         private void MainForm_Load(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        // 用socket模拟登陆多网卡
+        private void SocketPOST(string url, string username, string password)
+        {
+            List<string> listIP = new List<string>();
+            ManagementClass mcNetworkAdapterConfig = new ManagementClass("Win32_NetworkAdapterConfiguration");
+            ManagementObjectCollection moc_NetworkAdapterConfig = mcNetworkAdapterConfig.GetInstances();
+            foreach (ManagementObject mo in moc_NetworkAdapterConfig)
+            {
+                string mServiceName = mo["ServiceName"] as string;
+
+                //过滤非真实的网卡  
+                if (!(bool)mo["IPEnabled"])
+                { continue; }
+                if (mServiceName.ToLower().Contains("vmnet")
+                 || mServiceName.ToLower().Contains("vmware")
+                 || mServiceName.ToLower().Contains("ppoe")
+                 || mServiceName.ToLower().Contains("bthpan")
+                 || mServiceName.ToLower().Contains("tapvpn")
+                 || mServiceName.ToLower().Contains("ndisip")
+                 || mServiceName.ToLower().Contains("sinforvnic"))
+                { continue; }
+                
+                string[] mIPAddress = mo["IPAddress"] as string[];
+
+                if (mIPAddress != null)
+                {
+                    foreach (string ip in mIPAddress)
+                    {
+                        if (ip != "0.0.0.0")
+                        {
+                            IPAddress abc = IPAddress.Parse(ip);
+                            if (abc.AddressFamily == AddressFamily.InterNetwork) listIP.Add(ip);
+                        }
+                    }
+                }
+                mo.Dispose();
+            }
+
+            Socket _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);  //客户端socket
+            byte[] _buffer = new byte[1024 * 640];  //接收缓冲区
+            IPAddress _ip;  //当前请求主机IP
+            int _port;  //当前请求主机Port
+            string _path;  //当前请求url（除去主机部分）
+            string _host; //当前请求url（主机部分
+            
+            try
+            {
+                foreach (string ip in listIP)
+                {
+                    _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    _socket.Bind(new IPEndPoint(IPAddress.Parse(ip), 0));
+                    Uri u = new Uri(url);
+                    _ip = Dns.GetHostByName(u.Host).AddressList[0];
+                    _port = u.Port;
+                    _path = u.AbsolutePath;
+                    _host = u.Authority;
+
+                    _socket.Connect(new IPEndPoint(_ip, _port));  //使用socket连接web server
+                    byte[] bytes = Encoding.Default.GetBytes(password);
+                    string newpassword = Convert.ToBase64String(bytes);
+                    string postData = string.Format("username={0}&password={1}&enablemacauth=0", username, newpassword);
+                    string strRequest = string.Format("POST {0} HTTP/1.1\r\nHost:{1}\r\nContent-Length:{2}\r\nContent-Type:application/x-www-form-urlencoded\r\nConnection:Close\r\n\r\n{3}", _path, _host, postData.Length, postData);
+                    byte[] send_buffer = Encoding.UTF8.GetBytes(strRequest);
+                    _socket.Send(send_buffer);
+                    byte[] result = new byte[60 * 60];
+                    _socket.Receive(result);
+                    _socket.Close();
+                }
+            }
+            catch(Exception ex) { }
         }
     }
 }

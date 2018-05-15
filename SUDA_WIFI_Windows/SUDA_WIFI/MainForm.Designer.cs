@@ -61,6 +61,8 @@ namespace SUDA_WIFI
             this.label5 = new System.Windows.Forms.Label();
             this.lb_State = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBox_Test = new System.Windows.Forms.TextBox();
             this.contextMenuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -206,11 +208,31 @@ namespace SUDA_WIFI
             this.label3.TabIndex = 1;
             this.label3.Text = "当前连接状态：";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(334, 106);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 8;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // textBox_Test
+            // 
+            this.textBox_Test.Location = new System.Drawing.Point(252, 6);
+            this.textBox_Test.Multiline = true;
+            this.textBox_Test.Name = "textBox_Test";
+            this.textBox_Test.Size = new System.Drawing.Size(488, 201);
+            this.textBox_Test.TabIndex = 9;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(232, 219);
+            this.Controls.Add(this.textBox_Test);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btn_Manage);
             this.Controls.Add(this.btn_Login);
@@ -244,5 +266,7 @@ namespace SUDA_WIFI
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label lb_State;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox_Test;
     }
 }
