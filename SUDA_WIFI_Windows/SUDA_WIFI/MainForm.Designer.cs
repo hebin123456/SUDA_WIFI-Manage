@@ -210,7 +210,7 @@ namespace SUDA_WIFI
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(334, 106);
+            this.button1.Location = new System.Drawing.Point(720, 6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 8;
@@ -220,7 +220,7 @@ namespace SUDA_WIFI
             // 
             // textBox_Test
             // 
-            this.textBox_Test.Location = new System.Drawing.Point(252, 6);
+            this.textBox_Test.Location = new System.Drawing.Point(239, 6);
             this.textBox_Test.Multiline = true;
             this.textBox_Test.Name = "textBox_Test";
             this.textBox_Test.Size = new System.Drawing.Size(488, 201);

@@ -278,7 +278,7 @@ namespace SUDA_WIFI
         {
             if (!InvokeRequired)
             {
-                string str = Online();
+                string str = SocketOnline();
                 if (str != "0")
                 {
                     lb_State.Text = "已连接 " + str;
@@ -412,9 +412,109 @@ namespace SUDA_WIFI
             this.WindowState = FormWindowState.Minimized;
         }
 
+        private string SocketOnline()
+        {
+            List<string> listIP = new List<string>();
+            ManagementClass mcNetworkAdapterConfig = new ManagementClass("Win32_NetworkAdapterConfiguration");
+            ManagementObjectCollection moc_NetworkAdapterConfig = mcNetworkAdapterConfig.GetInstances();
+            foreach (ManagementObject mo in moc_NetworkAdapterConfig)
+            {
+                string mServiceName = mo["ServiceName"] as string;
+
+                //过滤非真实的网卡  
+                if (!(bool)mo["IPEnabled"])
+                { continue; }
+                if (mServiceName.ToLower().Contains("vmnet")
+                 || mServiceName.ToLower().Contains("vmware")
+                 || mServiceName.ToLower().Contains("ppoe")
+                 || mServiceName.ToLower().Contains("bthpan")
+                 || mServiceName.ToLower().Contains("tapvpn")
+                 || mServiceName.ToLower().Contains("ndisip")
+                 || mServiceName.ToLower().Contains("sinforvnic"))
+                { continue; }
+
+                string[] mIPAddress = mo["IPAddress"] as string[];
+
+                if (mIPAddress != null)
+                {
+                    foreach (string ip in mIPAddress)
+                    {
+                        if (ip != "0.0.0.0")
+                        {
+                            IPAddress abc = IPAddress.Parse(ip);
+                            if (abc.AddressFamily == AddressFamily.InterNetwork) listIP.Add(ip);
+                        }
+                    }
+                }
+                mo.Dispose();
+            }
+
+            Socket _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);  //客户端socket
+            byte[] _buffer = new byte[1024 * 640];  //接收缓冲区
+            IPAddress _ip;  //当前请求主机IP
+            int _port;  //当前请求主机Port
+            string _path;  //当前请求url（除去主机部分）
+            string _host; //当前请求url（主机部分
+
+            int flag = 1;
+            int a, b, c;
+            string ss = "";
+
+            try
+            {
+                foreach (string ip in listIP)
+                {
+                    _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                    _socket.Bind(new IPEndPoint(IPAddress.Parse(ip), 0));
+                    Uri u = new Uri("http://a.suda.edu.cn/index.php/index/init?");
+                    _ip = Dns.GetHostByName(u.Host).AddressList[0];
+                    _port = u.Port;
+                    _path = u.AbsolutePath;
+                    _host = u.Authority;
+
+                    _socket.Connect(new IPEndPoint(_ip, _port));  //使用socket连接web server
+                    string strRequest = string.Format("POST {0} HTTP/1.1\r\nHost:{1}\r\n\r\nContent-Type:application/x-www-form-urlencoded\r\nConnection:Close\r\n\r\n", _path, _host);
+                    byte[] send_buffer = Encoding.UTF8.GetBytes(strRequest);
+                    _socket.Send(send_buffer);
+                    byte[] result = new byte[60 * 60];
+                    _socket.Receive(result);
+                    _socket.Close();
+                    
+                    string resultstring = Encoding.Default.GetString(result);
+                    if (resultstring.Contains("\"status\":1"))
+                    {
+                        string pattern = "\"logout_timer\":\\d+";
+                        Match match = (new Regex(pattern)).Match(resultstring);
+                        string s = match.ToString();
+                        s = s.Substring(15, s.Length - 15);
+                        int t = Int32.Parse(s);
+                        a = t / 3600;
+                        b = t / 60 - a * 60;
+                        c = t % 60;
+                        ss = (a < 10 ? "0" : "") + a + ":" + (b < 10 ? "0" : "") + b + ":" + (c < 10 ? "0" : "") + c;
+                    }
+                    else
+                    {
+                        flag = 0;
+                    }
+                }
+            }
+            catch (Exception ex) {
+                flag = 0;
+            }
+            if(flag == 1)
+            {
+                return ss;
+            }
+            else
+            {
+                return "0";
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            textBox_Test.Text = SocketOnline();
         }
 
         // 用socket模拟登陆多网卡
