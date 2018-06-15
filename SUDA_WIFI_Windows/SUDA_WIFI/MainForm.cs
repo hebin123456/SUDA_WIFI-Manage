@@ -218,14 +218,6 @@ namespace SUDA_WIFI
         #endregion
         
 
-        private void MainForm_SizeChanged(object sender, EventArgs e)
-        {
-            if(this.WindowState == FormWindowState.Minimized)
-            {
-                ifMinimized();
-            }
-        }
-
         private void 退出ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Environment.Exit(0);
@@ -409,7 +401,7 @@ namespace SUDA_WIFI
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Minimized;
+            //this.WindowState = FormWindowState.Minimized;
         }
 
         private string SocketOnline()
@@ -566,6 +558,7 @@ namespace SUDA_WIFI
             {
                 foreach (string ip in listIP)
                 {
+                    //MessageBox.Show(ip);
                     _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
                     _socket.Bind(new IPEndPoint(IPAddress.Parse(ip), 0));
                     Uri u = new Uri(url);
@@ -577,8 +570,26 @@ namespace SUDA_WIFI
                     _socket.Connect(new IPEndPoint(_ip, _port));  //使用socket连接web server
                     byte[] bytes = Encoding.Default.GetBytes(password);
                     string newpassword = Convert.ToBase64String(bytes);
-                    string postData = string.Format("username={0}&password={1}&enablemacauth=0", username, newpassword);
-                    string strRequest = string.Format("POST {0} HTTP/1.1\r\nHost:{1}\r\nContent-Length:{2}\r\nContent-Type:application/x-www-form-urlencoded\r\nConnection:Close\r\n\r\n{3}", _path, _host, postData.Length, postData);
+                    string postData = string.Format("username={0}&password={1}&enablemacauth=0", username, System.Web.HttpUtility.UrlEncode(newpassword));
+                    //string strRequest = string.Format("POST {0} HTTP/1.1\r\nHost:{1}\r\nContent-Length:{2}\r\nContent-Type:application/x-www-form-urlencoded\r\nConnection:Close\r\n\r\n{3}", _path, _host, postData.Length, postData);
+
+                    string strRequest = string.Format("POST {0} HTTP/1.1\r\n" +
+                    "Host: {1}\r\n" +
+                    "Connection: keep-alive\r\n" +
+                    "Content-Length: {2}\r\n" +
+                    "Accept: application/json, text/javascript, */*; q=0.01\r\n" +
+                    "Origin: http://a.suda.edu.cn\r\n" +
+                    "X-Requested-With: XMLHttpRequest\r\n" +
+                    "User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.79 Safari/537.36 Maxthon/5.2.3.2000\r\n" +
+                    "Content-Type: application/x-www-form-urlencoded\r\n" +
+                    "DNT: 1\r\n" +
+                    "Referer: http://a.suda.edu.cn/\r\n" +
+                    "Accept-Encoding: gzip, deflate\r\n" +
+                    "Accept-Language: zh-CN\r\n" +
+                    "Cookie: yunsuo_session_verify=c3e8f5200efeafb5098884a1311cbadf; PHPSESSID=93vqjtuf4q2l43jptoi5s52s45; sunriseUsername={3}; sunriseDomain=campus; think_language=zh-CN\r\n" +
+                    "\r\n" +
+                    "{4}", _path, _host, postData.Length, username, postData);
+
                     byte[] send_buffer = Encoding.UTF8.GetBytes(strRequest);
                     _socket.Send(send_buffer);
                     byte[] result = new byte[60 * 60];
@@ -586,7 +597,41 @@ namespace SUDA_WIFI
                     _socket.Close();
                 }
             }
-            catch(Exception ex) { }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                ifMinimized();
+            }
+        }
+
+        //最小化的时候防止alt+tab显示
+        /*protected override CreateParams CreateParams
+        {
+            get
+            {
+                const int WS_EX_APPWINDOW = 0x40000;
+                const int WS_EX_TOOLWINDOW = 0x80;
+                CreateParams cp = base.CreateParams;
+                int WS_CAPTION = 0xC00000;
+                int WS_BORDER = 0x800000;
+
+                if (!this.ShowInTaskbar)
+                {
+                    
+                    cp.ExStyle &= (~WS_EX_APPWINDOW);    // 不显示在TaskBar
+                    cp.ExStyle |= WS_EX_TOOLWINDOW;      // 不显示在Alt-Tab
+                    return cp;
+                }
+
+                return cp;
+            }
+        }*/
     }
 }

@@ -1,6 +1,12 @@
 ## 苏大WIFI登录管理程序
 #这是一个苏大WIFI的管理程序，使用C#、Java和JavaScript开发，兼容Windows和Android、IOS
 
+#2018-06-15：
+
+1.修复最小化Bug
+
+2.加强多网卡识别
+
 #2018-04-20：
 
 1.修复最小化Bug
@@ -41,4 +47,4 @@
 
 #2017-06-25：
 
-使用APICLOUD STUDIO编译的新版本：使用原生的html5写的app, 兼容Android和IOS, 不过IOS需要一个证书才能编译, 本人不提供证书
+1.使用APICLOUD STUDIO编译的新版本：使用原生的html5写的app, 兼容Android和IOS, 不过IOS需要一个证书才能编译, 本人不提供证书

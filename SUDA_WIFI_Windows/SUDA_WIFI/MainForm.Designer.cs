@@ -210,7 +210,7 @@ namespace SUDA_WIFI
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(720, 6);
+            this.button1.Location = new System.Drawing.Point(755, 9);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 8;
@@ -248,7 +248,7 @@ namespace SUDA_WIFI
             this.Text = "SUDA_WIFI";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.contextMenuStrip1.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
