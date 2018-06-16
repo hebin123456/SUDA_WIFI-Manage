@@ -599,7 +599,7 @@ namespace SUDA_WIFI
             }
             catch(Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                //MessageBox.Show(ex.ToString());
             }
         }
 
