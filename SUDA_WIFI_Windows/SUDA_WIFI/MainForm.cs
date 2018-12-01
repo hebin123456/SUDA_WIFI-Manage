@@ -603,7 +603,7 @@ namespace SUDA_WIFI
             }
         }
 
-        private void MainForm_Resize(object sender, EventArgs e)
+        private void MainForm_SizeChanged(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)
             {
