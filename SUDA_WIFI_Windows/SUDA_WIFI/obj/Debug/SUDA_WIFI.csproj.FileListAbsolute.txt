@@ -49,3 +49,14 @@ C:\Users\以夕阳落款\Desktop\SUDA_WIFI_Windows\SUDA_WIFI\obj\Debug\SUDA_WIFI
 C:\Users\以夕阳落款\Desktop\SUDA_WIFI_Windows\SUDA_WIFI\obj\Debug\SUDA_WIFI.pdb
 C:\Users\以夕阳落款\Desktop\SUDA_WIFI_Windows\SUDA_WIFI\obj\Debug\SUDA_WIFI.csprojAssemblyReference.cache
 C:\Users\以夕阳落款\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI\obj\Debug\SUDA_WIFI.csprojAssemblyReference.cache
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI\bin\Debug\SUDA_WIFI.exe.config
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI\bin\Debug\SUDA_WIFI.exe
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI\bin\Debug\SUDA_WIFI.pdb
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI\obj\Debug\SUDA_WIFI.csprojAssemblyReference.cache
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI\obj\Debug\SUDA_WIFI.MainForm.resources
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI\obj\Debug\SUDA_WIFI.Manage.resources
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI\obj\Debug\SUDA_WIFI.Properties.Resources.resources
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI\obj\Debug\SUDA_WIFI.csproj.GenerateResource.cache
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI\obj\Debug\SUDA_WIFI.csproj.CoreCompileInputs.cache
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI\obj\Debug\SUDA_WIFI.exe
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI\obj\Debug\SUDA_WIFI.pdb
