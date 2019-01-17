@@ -194,7 +194,7 @@
 <body>
     <div id="wrap">
         <div id="main">
-            <div id="backimg"><img src="image/backimage.png" style="width: 100%;" /></div>
+            <div id="backimg"><img src="image/backimage.png" style="width: 100%;height: 100%" /></div>
             <div id="login">
                 <!-- 用户名栏 -->
                 <div class="logo">
@@ -338,7 +338,7 @@
                     values: {
                         username: username,
                         password: pass_encode,
-                        enablemacauth: "0"
+                        enablemacauth: "1"
                     }
                 }
             }, function(ret, err) {
