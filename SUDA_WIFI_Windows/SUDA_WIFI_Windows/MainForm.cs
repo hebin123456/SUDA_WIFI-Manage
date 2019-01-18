@@ -129,9 +129,6 @@ namespace SUDA_WIFI_Windows
 
             if (!isLimited)
             {
-                // 取消要记得取消状态改变
-                checkbox_autostart.Checked = !checkbox_autostart.Checked;
-
                 MessageBoxButtons messButton = MessageBoxButtons.OKCancel;
                 DialogResult dialogResult = MessageBox.Show("设置开机自启需要管理员权限, 确定吗?", "退出系统", messButton);
                 if (dialogResult == DialogResult.OK)
