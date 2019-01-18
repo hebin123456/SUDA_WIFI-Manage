@@ -58,5 +58,17 @@ namespace SUDA_WIFI_Windows.Properties {
                 this["autostart"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public int timer_interval {
+            get {
+                return ((int)(this["timer_interval"]));
+            }
+            set {
+                this["timer_interval"] = value;
+            }
+        }
     }
 }

@@ -18,15 +18,24 @@ namespace SUDA_WIFI_Windows
     {
         private static HttpHelper httpHelper = Program.Global.httpHelper;
 
-        public MainForm()
+        public MainForm(string[] args)
         {
             InitializeComponent();
             
             tb_username.Text = Properties.Settings.Default.username;
             tb_password.Text = Properties.Settings.Default.password;
+            trackBar_Interval.Value = Properties.Settings.Default.timer_interval;
             checkbox_autostart.Checked = Properties.Settings.Default.autostart;
 
             checkbox_autostart.CheckedChanged += Checkbox_autostart_CheckedChanged;
+
+            btn_Start_Click(null, null);
+            
+            if (args.Length != 0)
+            {
+                AddWindowExStyle(this.Handle, WS_EX_TOOLWINDOW);
+                this.WindowState = FormWindowState.Minimized;
+            }
         }
 
         private void btn_Login_Click(object sender, EventArgs e)
@@ -145,7 +154,7 @@ namespace SUDA_WIFI_Windows
                     string path = Application.ExecutablePath;
                     RegistryKey rk = Registry.LocalMachine;
                     RegistryKey rk2 = rk.CreateSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run");
-                    rk2.SetValue("SUDA_AUTO", path);
+                    rk2.SetValue("SUDA_AUTO", "\"" + path + "\" --autorun");
                     rk2.Close();
                     rk.Close();
                     Properties.Settings.Default.autostart = true;
@@ -181,6 +190,8 @@ namespace SUDA_WIFI_Windows
 
         private void trackBar_Interval_ValueChanged(object sender, EventArgs e)
         {
+            Properties.Settings.Default.timer_interval = trackBar_Interval.Value;
+            Properties.Settings.Default.Save();
             timer.Interval = trackBar_Interval.Value * 1000;
             label6.Text = trackBar_Interval.Value + "s";
         }
@@ -243,12 +254,11 @@ namespace SUDA_WIFI_Windows
         {
             if (e.Button == MouseButtons.Left)
             {
-                //RemoveWindowExStyle(this.Handle, WS_EX_TOOLWINDOW);
-                this.FormBorderStyle = FormBorderStyle.FixedSingle;
-
                 this.Visible = true;//弹出MainForm
-                this.WindowState = FormWindowState.Normal;//窗体恢复正常
                 this.notifyIcon.Visible = false;
+
+                this.FormBorderStyle = FormBorderStyle.FixedSingle;
+                this.WindowState = FormWindowState.Normal;//窗体恢复正常
             }
             else if (e.Button == MouseButtons.Right)
             {
