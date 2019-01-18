@@ -1,0 +1,11 @@
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI_Windows\bin\Debug\SUDA_WIFI_Windows.exe.config
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI_Windows\bin\Debug\SUDA_WIFI_Windows.exe
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI_Windows\bin\Debug\SUDA_WIFI_Windows.pdb
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI_Windows\obj\Debug\SUDA_WIFI_Windows.csprojAssemblyReference.cache
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI_Windows\obj\Debug\SUDA_WIFI_Windows.MainForm.resources
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI_Windows\obj\Debug\SUDA_WIFI_Windows.Manage.resources
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI_Windows\obj\Debug\SUDA_WIFI_Windows.Properties.Resources.resources
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI_Windows\obj\Debug\SUDA_WIFI_Windows.csproj.GenerateResource.cache
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI_Windows\obj\Debug\SUDA_WIFI_Windows.csproj.CoreCompileInputs.cache
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI_Windows\obj\Debug\SUDA_WIFI_Windows.exe
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI_Windows\obj\Debug\SUDA_WIFI_Windows.pdb
