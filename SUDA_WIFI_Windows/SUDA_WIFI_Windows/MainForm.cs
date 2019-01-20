@@ -125,6 +125,7 @@ namespace SUDA_WIFI_Windows
             tb_username.Enabled = !tb_username.Enabled;
             tb_password.Enabled = !tb_password.Enabled;
             btn_Login.Enabled = !btn_Login.Enabled;
+            btn_Fee.Enabled = !btn_Fee.Enabled;
             btn_Manage.Enabled = !btn_Manage.Enabled;
             btn_Start.Enabled = !btn_Start.Enabled;
             btn_Stop.Enabled = !btn_Stop.Enabled;
@@ -259,11 +260,19 @@ namespace SUDA_WIFI_Windows
 
                 this.FormBorderStyle = FormBorderStyle.FixedSingle;
                 this.WindowState = FormWindowState.Normal;//窗体恢复正常
+                this.ShowIcon = false;
+                this.ShowIcon = true;
             }
             else if (e.Button == MouseButtons.Right)
             {
                 contextMenuStrip.Show();
             }
+        }
+
+        private void btn_Fee_Click(object sender, EventArgs e)
+        {
+            Fee fee = new Fee();
+            fee.ShowDialog();
         }
     }
 }

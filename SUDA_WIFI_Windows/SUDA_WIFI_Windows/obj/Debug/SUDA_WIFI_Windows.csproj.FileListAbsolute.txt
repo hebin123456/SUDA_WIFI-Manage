@@ -9,3 +9,4 @@ C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI_Win
 C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI_Windows\obj\Debug\SUDA_WIFI_Windows.csproj.CoreCompileInputs.cache
 C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI_Windows\obj\Debug\SUDA_WIFI_Windows.exe
 C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI_Windows\obj\Debug\SUDA_WIFI_Windows.pdb
+C:\Users\Jerry\Documents\GitHub\SUDA_WIFI-Manage\SUDA_WIFI_Windows\SUDA_WIFI_Windows\obj\Debug\SUDA_WIFI_Windows.Fee.resources

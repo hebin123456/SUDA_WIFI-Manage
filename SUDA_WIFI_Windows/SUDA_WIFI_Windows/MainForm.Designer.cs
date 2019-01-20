@@ -37,19 +37,20 @@
             this.lb_State = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.trackBar_Interval = new System.Windows.Forms.TrackBar();
+            this.label4 = new System.Windows.Forms.Label();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_Manage = new System.Windows.Forms.Button();
             this.btn_Login = new System.Windows.Forms.Button();
             this.tb_password = new System.Windows.Forms.TextBox();
             this.tb_username = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.trackBar_Interval = new System.Windows.Forms.TrackBar();
             this.timer = new System.Windows.Forms.Timer(this.components);
-            this.label6 = new System.Windows.Forms.Label();
-            this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btn_Fee = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar_Interval)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
@@ -126,6 +127,38 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "高级功能——自动拨号";
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(167, 67);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(17, 12);
+            this.label6.TabIndex = 19;
+            this.label6.Text = "1s";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // trackBar_Interval
+            // 
+            this.trackBar_Interval.AutoSize = false;
+            this.trackBar_Interval.Location = new System.Drawing.Point(60, 64);
+            this.trackBar_Interval.Maximum = 300;
+            this.trackBar_Interval.Minimum = 1;
+            this.trackBar_Interval.Name = "trackBar_Interval";
+            this.trackBar_Interval.Size = new System.Drawing.Size(99, 20);
+            this.trackBar_Interval.TabIndex = 19;
+            this.trackBar_Interval.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackBar_Interval.Value = 1;
+            this.trackBar_Interval.ValueChanged += new System.EventHandler(this.trackBar_Interval_ValueChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 67);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(65, 12);
+            this.label4.TabIndex = 19;
+            this.label4.Text = "拨号间隔：";
+            // 
             // notifyIcon
             // 
             this.notifyIcon.ContextMenuStrip = this.contextMenuStrip;
@@ -133,11 +166,25 @@
             this.notifyIcon.Text = "苏大自动拨号";
             this.notifyIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseClick);
             // 
+            // contextMenuStrip
+            // 
+            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.退出ToolStripMenuItem});
+            this.contextMenuStrip.Name = "contextMenuStrip";
+            this.contextMenuStrip.Size = new System.Drawing.Size(101, 26);
+            // 
+            // 退出ToolStripMenuItem
+            // 
+            this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
+            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
+            this.退出ToolStripMenuItem.Text = "退出";
+            this.退出ToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
+            // 
             // btn_Manage
             // 
-            this.btn_Manage.Location = new System.Drawing.Point(145, 70);
+            this.btn_Manage.Location = new System.Drawing.Point(161, 70);
             this.btn_Manage.Name = "btn_Manage";
-            this.btn_Manage.Size = new System.Drawing.Size(75, 23);
+            this.btn_Manage.Size = new System.Drawing.Size(59, 23);
             this.btn_Manage.TabIndex = 15;
             this.btn_Manage.Text = "管理";
             this.btn_Manage.UseVisualStyleBackColor = true;
@@ -147,7 +194,7 @@
             // 
             this.btn_Login.Location = new System.Drawing.Point(14, 70);
             this.btn_Login.Name = "btn_Login";
-            this.btn_Login.Size = new System.Drawing.Size(75, 23);
+            this.btn_Login.Size = new System.Drawing.Size(59, 23);
             this.btn_Login.TabIndex = 14;
             this.btn_Login.Text = "登录";
             this.btn_Login.UseVisualStyleBackColor = true;
@@ -184,62 +231,27 @@
             this.label1.TabIndex = 10;
             this.label1.Text = "帐号：";
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 67);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(65, 12);
-            this.label4.TabIndex = 19;
-            this.label4.Text = "拨号间隔：";
-            // 
-            // trackBar_Interval
-            // 
-            this.trackBar_Interval.AutoSize = false;
-            this.trackBar_Interval.Location = new System.Drawing.Point(60, 64);
-            this.trackBar_Interval.Maximum = 300;
-            this.trackBar_Interval.Minimum = 1;
-            this.trackBar_Interval.Name = "trackBar_Interval";
-            this.trackBar_Interval.Size = new System.Drawing.Size(99, 20);
-            this.trackBar_Interval.TabIndex = 19;
-            this.trackBar_Interval.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trackBar_Interval.Value = 1;
-            this.trackBar_Interval.ValueChanged += new System.EventHandler(this.trackBar_Interval_ValueChanged);
-            // 
             // timer
             // 
             this.timer.Interval = 1000;
             this.timer.Tick += new System.EventHandler(this.timer_Tick);
             // 
-            // label6
+            // btn_Fee
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(167, 67);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(17, 12);
-            this.label6.TabIndex = 19;
-            this.label6.Text = "1s";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            // 
-            // contextMenuStrip
-            // 
-            this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.退出ToolStripMenuItem});
-            this.contextMenuStrip.Name = "contextMenuStrip";
-            this.contextMenuStrip.Size = new System.Drawing.Size(101, 26);
-            // 
-            // 退出ToolStripMenuItem
-            // 
-            this.退出ToolStripMenuItem.Name = "退出ToolStripMenuItem";
-            this.退出ToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.退出ToolStripMenuItem.Text = "退出";
-            this.退出ToolStripMenuItem.Click += new System.EventHandler(this.ExitToolStripMenuItem_Click);
+            this.btn_Fee.Location = new System.Drawing.Point(87, 70);
+            this.btn_Fee.Name = "btn_Fee";
+            this.btn_Fee.Size = new System.Drawing.Size(59, 23);
+            this.btn_Fee.TabIndex = 17;
+            this.btn_Fee.Text = "费用";
+            this.btn_Fee.UseVisualStyleBackColor = true;
+            this.btn_Fee.Click += new System.EventHandler(this.btn_Fee_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(233, 248);
+            this.Controls.Add(this.btn_Fee);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btn_Manage);
             this.Controls.Add(this.btn_Login);
@@ -284,6 +296,7 @@
         private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem 退出ToolStripMenuItem;
+        private System.Windows.Forms.Button btn_Fee;
     }
 }
 

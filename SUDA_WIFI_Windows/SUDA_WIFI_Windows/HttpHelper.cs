@@ -45,6 +45,7 @@ namespace SUDA_WIFI_Windows
             httpWebRequest.ContentType = "application/x-www-form-urlencoded";
             httpWebRequest.AllowAutoRedirect = true;
             httpWebRequest.CookieContainer = cookies;
+            cookies = httpWebRequest.CookieContainer;
             httpWebRequest.KeepAlive = true;
         }
 
@@ -313,6 +314,69 @@ namespace SUDA_WIFI_Windows
             {
                 return new RequestResponse(false, ex.ToString());
             }
+        }
+
+        public User GetFee(string username, string password)
+        {
+            try
+            {
+                string html = GetRequest("http://wlfy.suda.edu.cn/index.aspx");
+
+                string pattern = "<input.*?__VIEWSTATE.*?>";
+                Regex regex = new Regex(pattern);
+                string ViewState = regex.Match(html).ToString();
+                int a = ViewState.IndexOf("value=\"");
+                int b = ViewState.LastIndexOf("\"");
+                ViewState = ViewState.Substring(a + 7, b - a - 7);
+
+                pattern = "<input.*?__EVENTVALIDATION.*?>";
+                regex = new Regex(pattern);
+                string EventValidation = regex.Match(html).ToString();
+                a = EventValidation.IndexOf("value=\"");
+                b = EventValidation.LastIndexOf("\"");
+                EventValidation = EventValidation.Substring(a + 7, b - a - 7);
+
+                InitHttpWeb("http://wlfy.suda.edu.cn/index.aspx", Method.POST);
+                string postData = string.Format("__VIEWSTATE={0}&__EVENTVALIDATION={1}&TextBox1={2}&TextBox2={3}&Button1=%E7%99%BB%E5%BD%95", ConvertUrl(ViewState), ConvertUrl(EventValidation), ConvertUrl(username), ConvertUrl(password));
+                httpWebResponse = GetResponse(postData);
+
+                string result = string.Empty;
+                StreamReader sr = new StreamReader(httpWebResponse.GetResponseStream(), Encoding.GetEncoding("utf-8"));
+                result = sr.ReadToEnd();
+                sr.Close();
+
+                pattern = "<span id=\"姓名\">.*?</span>";
+                regex = new Regex(pattern);
+                string Name = regex.Match(result).ToString();
+                a = Name.IndexOf("姓名");
+                b = Name.LastIndexOf("<");
+                Name = Name.Substring(a + 4, b - a - 4);
+
+                pattern = "<span id=\"帐户\">.*?</span>";
+                regex = new Regex(pattern);
+                string Username = regex.Match(result).ToString();
+                a = Username.IndexOf("帐户");
+                b = Username.LastIndexOf("<");
+                Username = Username.Substring(a + 4, b - a - 4);
+
+                pattern = "<span id=\"余额\">.*?</span>";
+                regex = new Regex(pattern);
+                string Account = regex.Match(result).ToString();
+                a = Account.IndexOf("余额");
+                b = Account.LastIndexOf("<");
+                Account = Account.Substring(a + 4, b - a - 4);
+                
+                return new User(Name, Username, Account);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+        private string ConvertUrl(string data)
+        {
+            return data.Replace("/", "%2F").Replace("=", "%3D").Replace("+", "%2B");
         }
     }
 }
