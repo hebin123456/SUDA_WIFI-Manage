@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CryPto.cs" />
     <Compile Include="Fee.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -23,7 +23,7 @@ namespace SUDA_WIFI_Windows
             InitializeComponent();
 
             Username = Properties.Settings.Default.username;
-            Password = Properties.Settings.Default.password;
+            Password = CryPto.Decrypt(Properties.Settings.Default.password);
 
             btn_Refresh_Click(null, null);
         }

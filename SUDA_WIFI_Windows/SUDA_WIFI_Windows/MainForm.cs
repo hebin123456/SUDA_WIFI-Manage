@@ -23,13 +23,13 @@ namespace SUDA_WIFI_Windows
             InitializeComponent();
             
             tb_username.Text = Properties.Settings.Default.username;
-            tb_password.Text = Properties.Settings.Default.password;
+            tb_password.Text = CryPto.Decrypt(Properties.Settings.Default.password);
             trackBar_Interval.Value = Properties.Settings.Default.timer_interval;
             checkbox_autostart.Checked = Properties.Settings.Default.autostart;
 
             checkbox_autostart.CheckedChanged += Checkbox_autostart_CheckedChanged;
 
-            btn_Start_Click(null, null);
+            if(!(tb_username.Text == "" || tb_password.Text == "")) btn_Start_Click(null, null);
             
             if (args.Length != 0)
             {
@@ -50,7 +50,7 @@ namespace SUDA_WIFI_Windows
                         if (requestResponse.Result)
                         {
                             Properties.Settings.Default.username = tb_username.Text;
-                            Properties.Settings.Default.password = tb_password.Text;
+                            Properties.Settings.Default.password = CryPto.Encrypt(tb_password.Text);
                             Properties.Settings.Default.Save();
                             MessageBox.Show("登录成功!");
                         }

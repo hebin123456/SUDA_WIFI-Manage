@@ -25,7 +25,7 @@ namespace SUDA_WIFI_Windows
             InitializeComponent();
 
             tb_username.Text = Properties.Settings.Default.username;
-            tb_password.Text = Properties.Settings.Default.password;
+            tb_password.Text = CryPto.Decrypt(Properties.Settings.Default.password);
 
             new Thread(delegate ()
             {
@@ -51,7 +51,7 @@ namespace SUDA_WIFI_Windows
                     if (requestResponse.Result)
                     {
                         Properties.Settings.Default.username = tb_username.Text;
-                        Properties.Settings.Default.password = tb_password.Text;
+                        Properties.Settings.Default.password = CryPto.Encrypt(tb_password.Text);
                         Properties.Settings.Default.Save();
                         MessageBox.Show("登录成功!");
 
